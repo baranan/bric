@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The BRIC</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.5.4/css/colReorder.dataTables.min.css">
+    <style>
+        /* Modal styles */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            padding-top: 60px; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,0.9); 
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        .modal-content, #caption {
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @keyframes zoom {
+            from {transform: scale(0)} 
+            to {transform: scale(1)}
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Change cursor to hand when hovering over a photo */
+        .clickable-photo {
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/colreorder/1.5.4/js/dataTables.colReorder.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+</head>
+<body>
+    <table id="photoTable" class="display" style="width:100%">
+        <thead>
+            <tr id="tableHeaders"></tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <!-- The full-size photo Modal -->
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
+
+    <script src="bric.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const files = ['descriptivesEvaluations.csv', 'rankDiscrepanciesByPrime.csv', 'arousal.csv'];
+            let data1, data2, data3;
+
+            function checkAndCreateTable() {
+                if (data1 && data2 && data3) {
+                    const mergedData = mergeCSVData(data1, data2, data3);
+                    createTable(mergedData);
+                }
+            }
+
+            files.forEach((file, index) => {
+                Papa.parse(file, {
+                    download: true,
+                    header: true,
+                    complete: function(results) {
+                        if (index === 0) data1 = results.data;
+                        if (index === 1) data2 = results.data;
+                        if (index === 2) data3 = results.data;
+                        checkAndCreateTable();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
