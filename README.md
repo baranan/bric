@@ -4,7 +4,7 @@
  ## Links
 
 - [pre-print](https://osf.io/preprints/psyarxiv/fmqpc)
-- [osf](https://osf.io/v49rk/)
+- [osf](https://osf.io/3upme/)
 - [download photos](https://osf.io/s7h68/)
 - [download norms](https://osf.io/fnum4/)
 
