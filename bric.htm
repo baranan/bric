@@ -60,6 +60,79 @@
         .clickable-photo {
             cursor: pointer;
         }
+
+        /* Style the arrows */
+        .prev, .theNext {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        .prev {
+            left: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .theNext {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover, .theNext:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        /* The Modal (background) */
+        .modalCite {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+
+        /* Modal Content */
+        .modalCite-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            position: relative; /* Ensure the content is positioned relative to the modal */
+        }
+
+        /* The Close Button */
+        .closeCite {
+            color: #aaa;
+            position: absolute;
+            top: 2px;
+            left: 2px; /* Position the close button at the top-right of the modal */
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .closeCite:hover, .closeCite:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -67,6 +140,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 </head>
 <body>
+    <!-- Add this line where you want the links to appear -->
+    <p style="font-size: small;">
+        <a href="#" onclick="openCiteModal()">cite</a> | 
+        <a href="https://osf.io/preprints/psyarxiv/fmqpc" target="_blank">pre-print</a> | 
+        <a href="https://osf.io/v49rk/" target="_blank">osf</a> | 
+        <a href="https://osf.io/s7h68/" target="_blank">download photos</a> | 
+        <a href="https://osf.io/fnum4/" target="_blank">download norms</a>
+    </p>
+
+    <!-- Modal for cite -->
+<!-- Modal for cite -->
+    <div id="citeModal" class="modalCite">
+        <div class="modalCite-content">
+            <span class="closeCite" onclick="closeCiteModal()">&times;</span>
+            <p id="citeText">Segal-Gordon, N., & Bar-Anan, Y. (in press). The Beyond Reality Image Collection (BRIC). <i>Behavior Research Methods</i>.</p>
+        </div>
+    </div>
+
     <table id="photoTable" class="display" style="width:100%">
         <thead>
             <tr id="tableHeaders"></tr>
@@ -77,6 +168,8 @@
     <!-- The full-size photo Modal -->
     <div id="myModal" class="modal">
         <span class="close">&times;</span>
+        <span class="theNext">&#10095;</span>
+        <span class="prev">&#10094;</span>
         <img class="modal-content" id="img01">
         <div id="caption"></div>
     </div>

@@ -1,3 +1,19 @@
+function openCiteModal() {
+    document.getElementById("citeModal").style.display = "block";
+}
+
+function closeCiteModal() {
+    document.getElementById("citeModal").style.display = "none";
+}
+
+// Close the modal when the user clicks anywhere outside of it
+window.onclick = function(event) {
+    const modal = document.getElementById("citeModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
 $(document).ready(function() {
     let csvData = [];
 
@@ -49,7 +65,7 @@ $(document).ready(function() {
                 }
             });
             if (missingKeys.length > 0) {
-                console.log(`Row ${index + 1} is missing keys: ${missingKeys.join(', ')}`);
+                //console.log(`Row ${index + 1} is missing keys: ${missingKeys.join(', ')}`);
             }
         });
 
@@ -111,10 +127,11 @@ $(document).ready(function() {
             pageLength: 100 // Set the default number of shown entries to 100
         });
 
+        // Define currentIndex outside of the event listener
+        let currentIndex; 
+
         // Add click event listener for the photos
         $('#photoTable tbody').off('click', 'img.clickable-photo').on('click', 'img.clickable-photo', function() {
-
-            console.log("Photo clicked"); // Debugging: Log when a photo is clicked
             
             const modal = document.getElementById("myModal");
             const modalImg = document.getElementById("img01");
@@ -126,6 +143,8 @@ $(document).ready(function() {
 
             // Get the <span> element that closes the modal
             const span = document.getElementsByClassName("close")[0];
+            const prev = document.getElementsByClassName("prev")[0];
+            const theNext = document.getElementsByClassName("theNext")[0];
 
             // When the user clicks on <span> (x), close the modal
             span.onclick = function() {
@@ -138,6 +157,37 @@ $(document).ready(function() {
                     modal.style.display = "none";
                 }
             }
+
+            // Get all clickable photos in the current order
+            const photos = Array.from(document.querySelectorAll('#photoTable tbody img.clickable-photo'));
+            currentIndex = photos.indexOf(this);
+
+            //console.log("currentIndex="+currentIndex); // Debugging: Log when a photo is clicked
+
+            // Function to show the photo at a given index
+            function showPhoto(index) {
+                if (index >= 0 && index < photos.length) {
+                    currentIndex = index;
+                    modalImg.src = photos[currentIndex].src;
+                    captionText.innerHTML = photos[currentIndex].alt;
+                }
+            }
+
+            // When the user clicks on <span> (prev), show the previous photo
+            prev.onclick = function() {
+                //console.log("prev"); // Debugging: Log when the theNext button is clicked
+                showPhoto(currentIndex - 1);
+            }
+
+            // When the user clicks on <span> (theNext), show the theNext photo
+            theNext.onclick = function() {
+                //console.log("theNext"); 
+                showPhoto(currentIndex + 1);
+            }
+
+
+            //console.log("prev=",prev); // Debugging: Log the number of photos
+            //console.log("theNext=",theNext); // Debugging: Log the number of photos
         });
     }
 
