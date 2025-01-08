@@ -1,5 +1,6 @@
 # bric
- The Beyond Reality Image Collection
+ The Beyond Reality Image Collection.
+ See our website [here](https://baranan.github.io/bric/bric.htm).
 
  ## Links
 
