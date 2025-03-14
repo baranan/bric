@@ -11,7 +11,9 @@
 
 ## Citation
 
-Segal-Gordon, N., & Bar-Anan, Y. (in press). The Beyond Reality Image Collection (BRIC). *Behavior Research Methods*.
+Segal-Gordon, N., & Bar-Anan, Y. (2025). The Beyond Reality Image Collection (BRIC). *Behavior Research Methods, 57*, 49. https://doi.org/10.3758/s13428-024-02586-y
+
+Segal-Gordon, N., Bar-Anan, Y. The Beyond Reality Image Collection (BRIC). Behav Res 57, 49 (2025). https://doi.org/10.3758/s13428-024-02586-y
 
 ## License
 
